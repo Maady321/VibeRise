@@ -1,6 +1,6 @@
 "use client"
 
-import { Settings, Bell, GitBranch } from "lucide-react"
+import { Settings, Bell, GitBranch, Terminal } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   Popover,
@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { useAlarmStore } from "@/hooks/use-alarm-store"
 import { DeviceConnection } from "./device-connection"
+import Link from "next/link"
 
 export function AppHeader() {
   const { showStopButton, setShowStopButton, deviceId } = useAlarmStore()
@@ -19,13 +20,21 @@ export function AppHeader() {
     <header className="border-b sticky top-0 bg-background/95 backdrop-blur-sm z-10">
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
         <div className="flex items-center gap-3">
-          <Bell className="h-6 w-6 text-primary" />
+          <Link href="/">
+            <Bell className="h-6 w-6 text-primary" />
+          </Link>
           <h1 className="text-xl font-bold text-foreground">
             ESP32 Alarm Manager
           </h1>
         </div>
         <div className="flex items-center gap-2">
            <DeviceConnection />
+           <Link href="/terminal" passHref>
+             <Button variant="ghost" size="icon">
+                <Terminal className="h-5 w-5" />
+                <span className="sr-only">Terminal</span>
+              </Button>
+           </Link>
           <Popover>
             <PopoverTrigger asChild>
               <Button variant="ghost" size="icon">

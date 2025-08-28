@@ -1,6 +1,6 @@
 "use client"
 
-import { Settings, Bell, GitBranch } from "lucide-react"
+import { Settings } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   Popover,
@@ -23,12 +23,11 @@ export function AppHeader() {
         <div className="flex items-center gap-3">
           <Link href="/">
              <Image 
-                src="https://picsum.photos/32/32"
+                src="/images/logo.jpeg"
                 alt="VibRise Logo" 
                 width={32} 
                 height={32} 
                 className="rounded-md"
-                data-ai-hint="wave"
               />
           </Link>
           <h1 className="text-xl font-bold text-foreground">

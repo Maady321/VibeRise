@@ -7,7 +7,7 @@ import { AlarmFormDialog } from '@/components/alarm-form-dialog';
 import { AlarmList } from '@/components/alarm-list';
 import type { Alarm } from '@/types';
 import { AppHeader } from '@/components/header';
-import { Power } from 'lucide-react';
+import { Power, WifiOff } from 'lucide-react';
 
 export default function Home() {
   const {
@@ -15,6 +15,7 @@ export default function Home() {
     isLoading,
     showStopButton,
     triggerStopAlarm,
+    deviceId,
   } = useAlarmStore();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingAlarm, setEditingAlarm] = useState<Alarm | null>(null);
@@ -37,18 +38,30 @@ export default function Home() {
     <div className="min-h-screen w-full">
       <AppHeader />
       <main className="container mx-auto p-4 md:p-8">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-foreground">Your Alarms</h2>
-          <Button onClick={handleAddAlarm}>Add Alarm</Button>
-        </div>
+        {!deviceId ? (
+            <div className="flex flex-col items-center justify-center text-center py-16 px-4 rounded-lg border-2 border-dashed">
+                <WifiOff className="w-16 h-16 text-muted-foreground mb-4" />
+                <h3 className="text-xl font-semibold text-foreground">No Device Connected</h3>
+                <p className="text-muted-foreground mt-2">
+                Please connect to an ESP32 device using the button in the header.
+                </p>
+            </div>
+        ) : (
+            <>
+                <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-2xl font-bold text-foreground">Your Alarms</h2>
+                    <Button onClick={handleAddAlarm}>Add Alarm</Button>
+                </div>
 
-        <AlarmList
-          isLoading={isLoading}
-          alarms={alarms}
-          onEdit={handleEditAlarm}
-        />
+                <AlarmList
+                    isLoading={isLoading}
+                    alarms={alarms}
+                    onEdit={handleEditAlarm}
+                />
+            </>
+        )}
 
-        {showStopButton && (
+        {showStopButton && deviceId && (
           <div className="fixed bottom-8 right-8">
             <Button
               size="lg"

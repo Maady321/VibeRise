@@ -10,9 +10,10 @@ import {
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { useAlarmStore } from "@/hooks/use-alarm-store"
+import { DeviceConnection } from "./device-connection"
 
 export function AppHeader() {
-  const { showStopButton, setShowStopButton } = useAlarmStore()
+  const { showStopButton, setShowStopButton, deviceId } = useAlarmStore()
 
   return (
     <header className="border-b sticky top-0 bg-background/95 backdrop-blur-sm z-10">
@@ -24,10 +25,7 @@ export function AppHeader() {
           </h1>
         </div>
         <div className="flex items-center gap-2">
-           <div className="flex items-center gap-2 text-sm text-muted-foreground mr-4">
-            <GitBranch className="w-4 h-4"/>
-            <span>test-device-123</span>
-           </div>
+           <DeviceConnection />
           <Popover>
             <PopoverTrigger asChild>
               <Button variant="ghost" size="icon">

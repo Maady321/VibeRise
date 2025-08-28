@@ -24,14 +24,14 @@ export function AppHeader() {
           <Link href="/">
              <Image 
                 src="/images/WhatsApp Image 2025-08-17 at 12.32.42 PM (1).jpeg"
-                alt="VibRise Logo" 
+                alt="VibeRise Logo" 
                 width={32} 
                 height={32} 
                 className="rounded-md"
               />
           </Link>
           <h1 className="text-xl font-bold text-foreground">
-            VibRise
+            VibeRise
           </h1>
         </div>
         <div className="flex items-center gap-2">

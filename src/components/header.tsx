@@ -23,7 +23,7 @@ export function AppHeader() {
         <div className="flex items-center gap-3">
           <Link href="/">
              <Image 
-                src="https://picsum.photos/40/40" 
+                src="https://picsum.photos/32/32"
                 alt="VibRise Logo" 
                 width={32} 
                 height={32} 

@@ -12,6 +12,7 @@ import { Switch } from "@/components/ui/switch"
 import { useAlarmStore } from "@/hooks/use-alarm-store"
 import { DeviceConnection } from "./device-connection"
 import Link from "next/link"
+import Image from "next/image"
 
 export function AppHeader() {
   const { showStopButton, setShowStopButton } = useAlarmStore()
@@ -21,10 +22,17 @@ export function AppHeader() {
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
         <div className="flex items-center gap-3">
           <Link href="/">
-            <Bell className="h-6 w-6 text-primary" />
+             <Image 
+                src="https://picsum.photos/40/40" 
+                alt="VibRise Logo" 
+                width={32} 
+                height={32} 
+                className="rounded-md"
+                data-ai-hint="wave"
+              />
           </Link>
           <h1 className="text-xl font-bold text-foreground">
-            ESP32 Alarm Manager
+            VibRise
           </h1>
         </div>
         <div className="flex items-center gap-2">

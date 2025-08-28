@@ -23,7 +23,7 @@ export function AppHeader() {
         <div className="flex items-center gap-3">
           <Link href="/">
              <Image 
-                src="/images/logo.jpeg"
+                src="/images/WhatsApp Image 2025-08-17 at 12.32.42 PM (1).jpeg"
                 alt="VibRise Logo" 
                 width={32} 
                 height={32} 

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "PT Sans", sans-serif;
 }
 
 @layer base {
@@ -14,20 +14,20 @@ body {
     --card-foreground: 221 39% 11%;
     --popover: 210 40% 98%;
     --popover-foreground: 221 39% 11%;
-    --primary: 206 90% 54%;
+    --primary: 196 82% 51%;
     --primary-foreground: 210 40% 98%;
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
+    --accent: 128 78% 80%;
     --accent-foreground: 222.2 47.4% 11.2%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 206 90% 54%;
-    --chart-1: 206 90% 54%;
+    --ring: 196 82% 51%;
+    --chart-1: 196 82% 51%;
     --chart-2: 198 93% 60%;
     --chart-3: 190 95% 64%;
     --chart-4: 182 97% 68%;
@@ -41,7 +41,7 @@ body {
     --card-foreground: 210 40% 98%;
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-    --primary: 206 90% 54%;
+    --primary: 196 82% 51%;
     --primary-foreground: 210 40% 98%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
@@ -53,8 +53,8 @@ body {
     --destructive-foreground: 210 40% 98%;
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 206 90% 54%;
-    --chart-1: 206 90% 54%;
+    --ring: 196 82% 51%;
+    --chart-1: 196 82% 51%;
     --chart-2: 198 93% 60%;
     --chart-3: 190 95% 64%;
     --chart-4: 182 97% 68%;

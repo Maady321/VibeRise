@@ -1,6 +1,6 @@
 "use client"
 
-import { Settings, Bell, GitBranch, Terminal } from "lucide-react"
+import { Settings, Bell, GitBranch } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   Popover,
@@ -14,7 +14,7 @@ import { DeviceConnection } from "./device-connection"
 import Link from "next/link"
 
 export function AppHeader() {
-  const { showStopButton, setShowStopButton, deviceId } = useAlarmStore()
+  const { showStopButton, setShowStopButton } = useAlarmStore()
 
   return (
     <header className="border-b sticky top-0 bg-background/95 backdrop-blur-sm z-10">
@@ -29,12 +29,6 @@ export function AppHeader() {
         </div>
         <div className="flex items-center gap-2">
            <DeviceConnection />
-           <Link href="/terminal" passHref>
-             <Button variant="ghost" size="icon">
-                <Terminal className="h-5 w-5" />
-                <span className="sr-only">Terminal</span>
-              </Button>
-           </Link>
           <Popover>
             <PopoverTrigger asChild>
               <Button variant="ghost" size="icon">

@@ -44,6 +44,22 @@ export const useAlarmStore = () => {
           ? Object.keys(data).map(key => ({ id: key, ...data[key] })) 
           : [];
         setAlarms(alarmsArray);
+
+        const ringingRef = ref(database, `devices/${deviceId}/status/ringing`);
+        ringingUnsubscribe = onValue(ringingRef, (snapshot) => {
+          const ringingAlarmId = snapshot.val();
+          if (ringingAlarmId) {
+              const alarm = alarmsArray.find(a => a.id === ringingAlarmId);
+              if (alarm && alarm.wakeUpGame) {
+                  setRingingAlarm(alarm);
+              } else {
+                  setRingingAlarm(null); // Or a generic ringing state if no game
+              }
+          } else {
+              setRingingAlarm(null);
+          }
+        });
+        
         setIsLoading(false);
       }, (error) => {
         console.error("Firebase read failed: ", error);
@@ -56,21 +72,6 @@ export const useAlarmStore = () => {
         setIsLoading(false);
       });
 
-      const ringingRef = ref(database, `devices/${deviceId}/status/ringing`);
-      ringingUnsubscribe = onValue(ringingRef, (snapshot) => {
-        const ringingAlarmId = snapshot.val();
-        if (ringingAlarmId) {
-            const alarm = alarms.find(a => a.id === ringingAlarmId);
-            if (alarm && alarm.wakeUpGame) {
-                setRingingAlarm(alarm);
-            } else {
-                setRingingAlarm(null); // Or a generic ringing state if no game
-            }
-        } else {
-            setRingingAlarm(null);
-        }
-      });
-
     } else {
       setAlarms([]);
       setIsLoading(false);
@@ -81,7 +82,7 @@ export const useAlarmStore = () => {
       if (alarmsUnsubscribe) alarmsUnsubscribe();
       if (ringingUnsubscribe) ringingUnsubscribe();
     };
-  }, [deviceId, toast, alarms]);
+  }, [deviceId, toast]);
 
   const stopRinging = useCallback(() => {
     setRingingAlarm(null);

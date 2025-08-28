@@ -8,6 +8,7 @@ import { AlarmList } from '@/components/alarm-list';
 import type { Alarm } from '@/types';
 import { AppHeader } from '@/components/header';
 import { Power, WifiOff } from 'lucide-react';
+import { WakeUpGameDialog } from '@/components/wake-up-game-dialog';
 
 export default function Home() {
   const {
@@ -16,6 +17,8 @@ export default function Home() {
     showStopButton,
     triggerStopAlarm,
     deviceId,
+    ringingAlarm,
+    stopRinging,
   } = useAlarmStore();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingAlarm, setEditingAlarm] = useState<Alarm | null>(null);
@@ -33,6 +36,11 @@ export default function Home() {
   const handleStopAlarm = () => {
     triggerStopAlarm();
   }
+
+  const handleGameWin = () => {
+    stopRinging();
+    triggerStopAlarm();
+  };
 
   return (
     <div className="min-h-screen w-full">
@@ -61,7 +69,7 @@ export default function Home() {
             </>
         )}
 
-        {showStopButton && deviceId && (
+        {showStopButton && deviceId && !ringingAlarm && (
           <div className="fixed bottom-8 right-8">
             <Button
               size="lg"
@@ -80,6 +88,12 @@ export default function Home() {
         isOpen={dialogOpen}
         setIsOpen={setDialogOpen}
         alarm={editingAlarm}
+      />
+
+      <WakeUpGameDialog
+        isOpen={!!ringingAlarm}
+        onGameWin={handleGameWin}
+        alarm={ringingAlarm}
       />
     </div>
   );

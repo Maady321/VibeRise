@@ -14,6 +14,7 @@ export const useAlarmStore = () => {
   const [showStopButton, setShowStopButtonState] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [deviceId, setDeviceIdState] = useState<string | null>(null);
+  const [ringingAlarm, setRingingAlarm] = useState<Alarm | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -31,11 +32,13 @@ export const useAlarmStore = () => {
   }, []);
 
   useEffect(() => {
-    let unsubscribe: Unsubscribe | null = null;
+    let alarmsUnsubscribe: Unsubscribe | null = null;
+    let ringingUnsubscribe: Unsubscribe | null = null;
+
     if (deviceId) {
       setIsLoading(true);
       const alarmsRef = ref(database, `devices/${deviceId}/alarms`);
-      unsubscribe = onValue(alarmsRef, (snapshot) => {
+      alarmsUnsubscribe = onValue(alarmsRef, (snapshot) => {
         const data = snapshot.val();
         const alarmsArray: Alarm[] = data 
           ? Object.keys(data).map(key => ({ id: key, ...data[key] })) 
@@ -52,17 +55,37 @@ export const useAlarmStore = () => {
         setAlarms([]);
         setIsLoading(false);
       });
+
+      const ringingRef = ref(database, `devices/${deviceId}/status/ringing`);
+      ringingUnsubscribe = onValue(ringingRef, (snapshot) => {
+        const ringingAlarmId = snapshot.val();
+        if (ringingAlarmId) {
+            const alarm = alarms.find(a => a.id === ringingAlarmId);
+            if (alarm && alarm.wakeUpGame) {
+                setRingingAlarm(alarm);
+            } else {
+                setRingingAlarm(null); // Or a generic ringing state if no game
+            }
+        } else {
+            setRingingAlarm(null);
+        }
+      });
+
     } else {
       setAlarms([]);
       setIsLoading(false);
+      setRingingAlarm(null);
     }
 
     return () => {
-      if (unsubscribe) {
-        unsubscribe();
-      }
+      if (alarmsUnsubscribe) alarmsUnsubscribe();
+      if (ringingUnsubscribe) ringingUnsubscribe();
     };
-  }, [deviceId, toast]);
+  }, [deviceId, toast, alarms]);
+
+  const stopRinging = useCallback(() => {
+    setRingingAlarm(null);
+  }, []);
 
   const setDeviceId = useCallback((id: string | null) => {
     setDeviceIdState(id);
@@ -146,5 +169,5 @@ export const useAlarmStore = () => {
     }
   }, [deviceId, toast]);
 
-  return { alarms, isLoading, deviceId, setDeviceId, addAlarm, updateAlarm, deleteAlarm, toggleAlarm, triggerStopAlarm, showStopButton, setShowStopButton };
+  return { alarms, isLoading, deviceId, setDeviceId, addAlarm, updateAlarm, deleteAlarm, toggleAlarm, triggerStopAlarm, showStopButton, setShowStopButton, ringingAlarm, stopRinging };
 };

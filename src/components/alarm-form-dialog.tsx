@@ -33,6 +33,7 @@ const alarmSchema = z.object({
     sun: z.boolean().default(false),
   }),
   enabled: z.boolean().default(true),
+  wakeUpGame: z.boolean().default(false),
 })
 
 type AlarmFormData = z.infer<typeof alarmSchema>
@@ -63,6 +64,7 @@ export function AlarmFormDialog({ isOpen, setIsOpen, alarm }: AlarmFormDialogPro
       label: "",
       repeat: { mon: false, tue: false, wed: false, thu: false, fri: false, sat: false, sun: false },
       enabled: true,
+      wakeUpGame: false,
     },
   })
 
@@ -74,6 +76,7 @@ export function AlarmFormDialog({ isOpen, setIsOpen, alarm }: AlarmFormDialogPro
           label: alarm.label,
           repeat: alarm.repeat,
           enabled: alarm.enabled,
+          wakeUpGame: alarm.wakeUpGame || false,
         })
       } else {
         form.reset({
@@ -81,6 +84,7 @@ export function AlarmFormDialog({ isOpen, setIsOpen, alarm }: AlarmFormDialogPro
           label: "",
           repeat: { mon: false, tue: false, wed: false, thu: false, fri: false, sat: false, sun: false },
           enabled: true,
+          wakeUpGame: false,
         })
       }
     }
@@ -156,6 +160,16 @@ export function AlarmFormDialog({ isOpen, setIsOpen, alarm }: AlarmFormDialogPro
                     <Button type="button" variant="outline" size="sm" onClick={setDaily}>Daily</Button>
                 </div>
             </div>
+          </div>
+          <div className="flex items-center justify-between rounded-lg border p-3 shadow-sm">
+            <Label htmlFor="wakeUpGame" className="text-base">Enable Wake-up Game</Label>
+             <Controller
+                  control={form.control}
+                  name="wakeUpGame"
+                  render={({ field }) => (
+                    <Switch id="wakeUpGame" checked={field.value} onCheckedChange={field.onChange} />
+                  )}
+                />
           </div>
           <div className="flex items-center justify-between rounded-lg border p-3 shadow-sm">
             <Label htmlFor="enabled" className="text-base">Enable Alarm</Label>

@@ -6,4 +6,5 @@ export interface Alarm {
   label: string;
   repeat: Record<Day, boolean>;
   enabled: boolean;
+  wakeUpGame: boolean;
 }
